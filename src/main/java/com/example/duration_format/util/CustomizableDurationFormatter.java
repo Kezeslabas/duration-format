@@ -1,4 +1,6 @@
-package formatter;
+package com.example.duration_format.util;
+
+import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -9,12 +11,13 @@ import java.util.TreeMap;
 import java.util.function.Function;
 
 /**
- * Use the {@link DurationFormatter#format(Duration)} to format any duration to human readable format.
+ * Use the {@link CustomizableDurationFormatter#format(Duration)} to format any duration to human readable format.
  * Note, that the class considers 365 days as one year, not 365.2425
  * <br>
- * Additional time parts can be applied with {@link DurationFormatter#addFormatterComponent(ChronoUnit, Function)}
+ * Additional time parts can be applied with {@link CustomizableDurationFormatter#addFormatterComponent(ChronoUnit, Function)}
  */
-public class DurationFormatter {
+@NoArgsConstructor
+public class CustomizableDurationFormatter implements DurationFormatter {
 
     private static final String ZERO_LENGTH_DEFAULT = "now";
     private static final String SEPARATOR_DEFAULT = ", ";
@@ -24,14 +27,6 @@ public class DurationFormatter {
     private static final int DAYS_IN_YEAR = 365;
 
     private final Map<ChronoUnit, Function<Duration, String>> formatterComponents = new TreeMap<>(Collections.reverseOrder());
-
-    public DurationFormatter() {
-        addFormatterComponent(ChronoUnit.YEARS, DurationFormatter::YEAR_FORMATTER);
-        addFormatterComponent(ChronoUnit.DAYS, DurationFormatter::DAY_FORMATTER);
-        addFormatterComponent(ChronoUnit.HOURS, DurationFormatter::HOUR_FORMATTER);
-        addFormatterComponent(ChronoUnit.MINUTES, DurationFormatter::MINUTE_FORMATTER);
-        addFormatterComponent(ChronoUnit.SECONDS, DurationFormatter::SECOND_FORMATTER);
-    }
 
     public void addFormatterComponent(ChronoUnit chronoUnit, Function<Duration, String> formatterFunc){
         formatterComponents.put(chronoUnit, formatterFunc);

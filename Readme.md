@@ -4,5 +4,15 @@ A solution to the following task.
 
 https://www.codewars.com/kata/human-readable-duration-format
 
-The main class starts an app that waits for a user input (seconds) 
-and displays it in human readable format per the task describes it.
+For this solution Spring Boot was used, 
+and the formatting can be tested in the following endpoint.
+
+```
+GET /durationformatter/format?seconds=1
+```
+
+In default, the app starts in the `8080` port,
+and after importing the maven project, it should require no configuration.
+
+> Note: The app counts `365` days as a full year, 
+> not `365.2425` days.
